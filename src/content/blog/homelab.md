@@ -1,7 +1,7 @@
 ---
 author: Mark Bundschuh
 pubDatetime: 2023-12-08
-title: State of the Homelab Address 2023
+title: My Homelab
 postSlug: homelab
 featured: true
 draft: false
