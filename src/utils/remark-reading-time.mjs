@@ -6,6 +6,5 @@ export function remarkReadingTime() {
     const textOnPage = toString(tree);
     const readingTime = getReadingTime(textOnPage);
     data.astro.frontmatter.readingTime = readingTime.text;
-    console.log(data.astro.frontmatter);
   };
 }
