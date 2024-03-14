@@ -1,11 +1,11 @@
-import slugify from "./slugify";
 import type { CollectionEntry } from "astro:content";
+import { slugifyStr } from "./slugify";
 
 export const getReadingTime = async () => {
   // Get all posts using glob. This is to get the updated frontmatter
-  const globPosts = import.meta.glob("../content/blog/*.md") as Promise<
-    CollectionEntry<"blog">["data"][]
-  >;
+  const globPosts = import.meta.glob(
+    "../content/blog/*.md"
+  ) as unknown as Promise<CollectionEntry<"blog">["data"][]>;
 
   // Then, set those frontmatter value in a JS Map with key value pair
   const mapFrontmatter = new Map();
@@ -13,7 +13,10 @@ export const getReadingTime = async () => {
   await Promise.all(
     globPostsValues.map(async globPost => {
       const { frontmatter } = await globPost();
-      mapFrontmatter.set(slugify(frontmatter), frontmatter.readingTime);
+      mapFrontmatter.set(
+        slugifyStr(frontmatter.title),
+        frontmatter.readingTime
+      );
     })
   );
 
@@ -23,7 +26,7 @@ export const getReadingTime = async () => {
 const getPostsWithRT = async (posts: CollectionEntry<"blog">[]) => {
   const mapFrontmatter = await getReadingTime();
   return posts.map(post => {
-    post.data.readingTime = mapFrontmatter.get(slugify(post.data));
+    post.data.readingTime = mapFrontmatter.get(slugifyStr(post.data.title));
     return post;
   });
 };
