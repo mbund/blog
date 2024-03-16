@@ -59,83 +59,192 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     </section>
 
     <section>
-      <a href="https://github.com/rhombusgg/rhombus">
-        <img src="/assets/projects/rhombus.gif" />
-      </a>
-      <a href="https://github.com/mbund/cdr">
-        <img src="/assets/projects/cdr.gif" />
-      </a>
-      <a href="https://github.com/mbund/canvas-cli">
-        <img src="/assets/projects/canvas-cli.gif" />
-      </a>
-      <a href="https://github.com/mbund/decompiler-explorer">
-        <img src="/assets/projects/decompiler-explorer.gif" />
-      </a>
-      <div class="grid grid-cols-3">
-        <a
-          class="aspect-square overflow-hidden"
-          href="https://github.com/cscosu/buckeyectf-2023-public/tree/master/rev-emotional-damage"
-        >
-          <img
-            class="h-full w-full object-cover"
-            src="/assets/projects/ctf/emotional-damage.png"
-            alt="Emotional Damage CTF Challenge"
-          />
-        </a>
-        <a
-          href="https://github.com/cscosu/buckeyectf-2023-public/tree/master/misc-ogrechat"
-          class="aspect-square overflow-hidden"
-        >
-          <img
-            class="h-full w-full object-cover"
-            src="/assets/projects/ctf/ogrechat.png"
-            alt="Ogrechat CTF Challenge"
-          />
-        </a>
-        <a
-          href="https://github.com/cscosu/buckeyectf-2023-public/tree/master/misc-parkour"
-          class="aspect-square overflow-hidden"
-        >
-          <img
-            class="h-full w-full object-cover"
-            src="/assets/projects/ctf/parkour.png"
-            alt="Parkour CTF Challenge"
-          />
-        </a>
-        <a
-          href="https://github.com/cscosu/buckeyectf-2023-public/tree/master/web-sentiment"
-          class="aspect-square overflow-hidden"
-        >
-          <img
-            class="h-full w-full object-cover"
-            src="/assets/projects/ctf/sentiment.png"
-            alt="Sentiment CTF Challenge"
-          />
-        </a>
-        <a
-          href="https://github.com/cscosu/buckeyectf-2023-public/tree/master/web-font-review"
-          class="aspect-square overflow-hidden"
-        >
-          <img
-            class="h-full w-full object-cover"
-            src="/assets/projects/ctf/font-review.png"
-            alt="Font Review CTF Challenge"
-          />
-        </a>
-        <a
-          href="https://github.com/cscosu/buckeyectf-2023-public/tree/master/misc-smederij"
-          class="aspect-square overflow-hidden"
-        >
-          <img
-            class="h-full w-full object-cover"
-            src="/assets/projects/ctf/smederij.png"
-            alt="Smederij CTF Challenge"
-          />
-        </a>
+      <h1 class="mb-4 text-3xl font-bold sm:mb-8 sm:text-5xl">What do I do?</h1>
+
+      <div class="space-y-12">
+        <div>
+          <p class="mb-4">
+            ...I build full stack applications.
+            <br /><br />
+            This is Rhombus, a a Jeopardy style competition platform with a cohesive
+            and modern user interface for hosting CTF events. Written with bleeding
+            edge tools like Svelte, TypeScript, and TailwindCSS.
+            <br /><br />
+            <a
+              class="link-underline"
+              href="https://github.com/rhombusgg/rhombus">Go to project</a
+            >
+          </p>
+          <a href="https://github.com/rhombusgg/rhombus">
+            <img src="/assets/projects/rhombus.gif" />
+          </a>
+        </div>
+
+        <div>
+          <p class="mb-4">
+            ...I make tools to improve efficiency.
+            <br /><br />
+            This is Canvas CLI, a command line interface to submit class assignments
+            and download files. Compatible with any institution using Instructure's
+            Canvas Learning Management System. Written in Rust using official REST
+            APIs.
+            <br /><br />
+            <a class="link-underline" href="https://github.com/mbund/canvas-cli"
+              >Go to project</a
+            >
+          </p>
+          <a href="https://github.com/mbund/canvas-cli">
+            <img alt="Canvas CLI demo" src="/assets/projects/canvas-cli.gif" />
+          </a>
+        </div>
+
+        <div>
+          <p class="mb-4">
+            ...I prototype quickly to scratch my curious itches.
+            <br /><br />
+            This is the OSU Course Dependency Visualizer, a visualization of every
+            course available at the Ohio State University and what prerequisites
+            are required for them as an explorable DAG. Writen with TypeScript and
+            Astro.
+            <br /><br />
+            <a class="link-underline" href="https://github.com/mbund/cdr"
+              >Go to project</a
+            >
+          </p>
+          <a href="https://github.com/mbund/cdr">
+            <img
+              alt="OSU Class Dependency Visualizer demo"
+              src="/assets/projects/cdr.gif"
+            />
+          </a>
+        </div>
+
+        <div>
+          <p class="mb-4">
+            ...I think about privacy and data.
+            <br /><br />
+            This is my homelab dashboard. I run numerous services (&gt;25) on my
+            home server using Kubernetes, following GitOps principles. Metrics and
+            logs are easily monitored with Grafana. I use it for data sovereignty,
+            learning, and fun.
+            <br /><br />
+            <a class="link-underline" href="https://github.com/mbund/homelab"
+              >Go to project</a
+            >
+          </p>
+          <a href="https://github.com/mbund/homelab">
+            <img
+              alt="Screenshot of my homelab dashboard"
+              src="/assets/projects/homarr.png"
+            />
+          </a>
+        </div>
+
+        <div>
+          <p class="mb-4">
+            ...I dive deeper into technical topics.
+            <br /><br />
+            This is the Decompiler Explorer. Sometimes the best way to learn about
+            compilers is by learning about decompilers. I apply my existing knowledge
+            to find the best way for me to learn something new.
+            <br /><br />
+            <a
+              class="link-underline"
+              href="https://github.com/mbund/decompiler-explorer"
+              >Go to project</a
+            >
+          </p>
+          <a href="https://github.com/mbund/decompiler-explorer">
+            <img
+              alt="Decompiler Explorer demo"
+              src="/assets/projects/decompiler-explorer.gif"
+            />
+          </a>
+        </div>
+
+        <div>
+          <p class="mb-4">
+            ...I write CTF challenges
+            <br /><br />
+            These are a few cybersecurity based challenges I've written for the Cybersecurity
+            Club at OSU. I explore topics like XSS, CSRF, command injection, and
+            more (see Minecraft hacking).
+          </p>
+          <div class="grid grid-cols-3">
+            <a
+              class="aspect-square overflow-hidden"
+              href="https://github.com/cscosu/buckeyectf-2023-public/tree/master/rev-emotional-damage"
+            >
+              <img
+                class="h-full w-full object-cover"
+                src="/assets/projects/ctf/emotional-damage.png"
+                alt="Emotional Damage CTF Challenge"
+              />
+            </a>
+            <a
+              href="https://github.com/cscosu/buckeyectf-2023-public/tree/master/misc-ogrechat"
+              class="aspect-square overflow-hidden"
+            >
+              <img
+                class="h-full w-full object-cover"
+                src="/assets/projects/ctf/ogrechat.png"
+                alt="Ogrechat CTF Challenge"
+              />
+            </a>
+            <a
+              href="https://github.com/cscosu/buckeyectf-2023-public/tree/master/misc-parkour"
+              class="aspect-square overflow-hidden"
+            >
+              <img
+                class="h-full w-full object-cover"
+                src="/assets/projects/ctf/parkour.png"
+                alt="Parkour CTF Challenge"
+              />
+            </a>
+            <a
+              href="https://github.com/cscosu/buckeyectf-2023-public/tree/master/web-sentiment"
+              class="aspect-square overflow-hidden"
+            >
+              <img
+                class="h-full w-full object-cover"
+                src="/assets/projects/ctf/sentiment.png"
+                alt="Sentiment CTF Challenge"
+              />
+            </a>
+            <a
+              href="https://github.com/cscosu/buckeyectf-2023-public/tree/master/web-font-review"
+              class="aspect-square overflow-hidden"
+            >
+              <img
+                class="h-full w-full object-cover"
+                src="/assets/projects/ctf/font-review.png"
+                alt="Font Review CTF Challenge"
+              />
+            </a>
+            <a
+              href="https://github.com/cscosu/buckeyectf-2023-public/tree/master/misc-smederij"
+              class="aspect-square overflow-hidden"
+            >
+              <img
+                class="h-full w-full object-cover"
+                src="/assets/projects/ctf/smederij.png"
+                alt="Smederij CTF Challenge"
+              />
+            </a>
+          </div>
+        </div>
+
+        <p>
+          ...and I write a blog! Read some of my posts below, or have a look at
+          some of my other projects on <a
+            class="link-underline"
+            href="https://github.com/mbund">GitHub</a
+          >.
+        </p>
       </div>
     </section>
 
-    <Hr />
+    <!-- <Hr /> -->
 
     {
       featuredPosts.length > 0 && (
@@ -227,5 +336,9 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   }
   .all-posts-btn-wrapper {
     @apply my-8 text-center;
+  }
+
+  .link-underline {
+    @apply font-medium underline decoration-dashed underline-offset-4 hover:text-skin-accent;
   }
 </style>
