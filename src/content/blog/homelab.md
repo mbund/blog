@@ -1,12 +1,13 @@
 ---
 author: Mark Bundschuh
 pubDatetime: 2023-12-08
-title: My Homelab
+title: The start of a homelabbing journey
 postSlug: homelab
 featured: true
 draft: false
 tags:
   - homelab
+  - infrastructure
 description: Everyone's homelab is bespoke. This is the start of my self hosting journey, where I talk about my homelabbing philosophy and the services I'm running.
 ---
 
@@ -26,7 +27,7 @@ It's important to have design goals when building a homelab. Some really only wa
 
 ### Repurpose old hardware
 
-As I already mentioned, I have a lot of old hardware lying around which I think is useful enough. Ideally I want a solution that can horizontally scale accross these devices I already have. And related to this goal is that I am a College student (High School at the start of this journey), so I want to spend $0 (or as close to it) in total to get this up and running. This is largely the reason why my homelab does not have a NAS component to it, because that would require me to buy hard drives (or SSDs) and an enclosure.
+As I already mentioned, I have a lot of old hardware lying around which I think is useful enough. Ideally I want a solution that can horizontally scale across these devices I already have. And related to this goal is that I am a College student (High School at the start of this journey), so I want to spend $0 (or as close to it) in total to get this up and running. This is largely the reason why my homelab does not have a NAS component to it, because that would require me to buy hard drives (or SSDs) and an enclosure.
 
 ### Secure access
 
@@ -40,7 +41,7 @@ If anything goes wrong, I want to have a pleasant experience debugging what happ
 
 All of these fancy ingress options and observability hooks should be handled automatically. I want to, with a single easy-to-read configuration file checked into git, be able to:
 
-- Edit (and add) relavent DNS records
+- Edit (and add) relevant DNS records
 - Provision SSL certificates (if http)
 - Expose the service to the public internet, or to my internal VPN
 - Preserve IP address all the way to the service (no internal `10.0.0.0/16` addresses showing up in logs)
@@ -77,8 +78,7 @@ This a more NAS focused operating system as the name suggests. It lets you set u
 
 #### Ansible
 
-Ansible is a flexible configuration management system. It's basically a declarative alternative to managing a load of bash scripts. I feel like I should have spent more time looking into Ansible but I think I just skill issued really hard here. Something about it didn't feel right, that I can't really explain. It's written in Python and I have a fear of `Traceback (most recent call last):
-`. It doesn't feel built to decide where to place each service, and pooling the storage of each node together also doesn't seem to be possible. I wouldn't let this detract you from trying out Ansible though.
+Ansible is a flexible configuration management system. It's basically a declarative alternative to managing a load of bash scripts. I feel like I should have spent more time looking into Ansible but I think I just skill issued really hard here. Something about it didn't feel right, that I can't really explain. It's written in Python and I have a fear of `Traceback (most recent call last):`. It doesn't feel built to decide where to place each service, and pooling the storage of each node together also doesn't seem to be possible. I wouldn't let this detract you from trying out Ansible though.
 
 #### Kubernetes
 
@@ -97,7 +97,7 @@ I used the [K3S](https://k3s.io) Kubernetes distribution. It's a lightweight dis
 
 ### Ingress
 
-Ingress is the process of exposing a service to the internet. This is typically done by pointing a domain name to an IP address (an `A` record for IPv4 or `AAAA` record for IPv6). I find that a lot of tutorials and guides on self hosting gloss over this part, leaving SSL certficates and other magic as an afterthought. So lets talk about it and some of the evolution of ingress into my homelab.
+Ingress is the process of exposing a service to the internet. This is typically done by pointing a domain name to an IP address (an `A` record for IPv4 or `AAAA` record for IPv6). I find that a lot of tutorials and guides on self hosting gloss over this part, leaving SSL certificates and other magic as an afterthought. So lets talk about it and some of the evolution of ingress into my homelab.
 
 #### 127.0.0.1
 
@@ -209,9 +209,9 @@ Now we have public ingress too!
 
 ### Observability
 
-I used Prometheus and Grafana as I had planned. There is an excellent [Helm chart](https://github.com/prometheus-community/helm-charts) available to do basically everything for you. It actually highlights another feature of Kubernetes that I didn't mention earlier, which is Helm. Helm is a package manager for Kubernetes, and since Kubernetes deployments are so common, there are first-party Helm charts available for most projects. This is a huge time saver because you don't have to configure all of the Kubernetes resources yourself, you just have to fill in some values in a `values.yaml` file, most of which are specfic configuration for the project and not fiddling with ports and pods and metrics and all that nonsense.
+I used Prometheus and Grafana as I had planned. There is an excellent [Helm chart](https://github.com/prometheus-community/helm-charts) available to do basically everything for you. It actually highlights another feature of Kubernetes that I didn't mention earlier, which is Helm. Helm is a package manager for Kubernetes, and since Kubernetes deployments are so common, there are first-party Helm charts available for most projects. This is a huge time saver because you don't have to configure all of the Kubernetes resources yourself, you just have to fill in some values in a `values.yaml` file, most of which are specific configuration for the project and not fiddling with ports and pods and metrics and all that nonsense.
 
-This Prometheus and Grafana chart lets installes CRDs (Custom Resource Definitions) into the cluster for metrics. What that means in English is that charts can define where Prometheus should scrape (with HTTP requests) the `/metrics` or whatever app specific endpoint there is.
+This Prometheus and Grafana chart lets installs CRDs (Custom Resource Definitions) into the cluster for metrics. What that means in English is that charts can define where Prometheus should scrape (with HTTP requests) the `/metrics` or whatever app specific endpoint there is.
 
 With Grafana you can set up alerts to notify you when things go wrong. In addition to this I also use [Uptime Kuma](https://uptime.kuma.pet) to monitor resources outside of my cluster (like the relay). I get alerts through a webhook to a private [Matrix](https://matrix.org) room with my main account and a bot account.
 
@@ -236,7 +236,7 @@ Here they are:
 
 ### Mail
 
-Yes, I am crazy enough to self host my own email. This is just for fun though and I don't use it for anything important. Unfortunately the current landscape basically requires you to have and use Gmail if you want to guarentee that your emails arrive in the inbox of the recipient. I don't want to miss out on an apartment because my email got marked as spam, or my home internet was out for a few minutes.
+Yes, I am crazy enough to self host my own email. This is just for fun though and I don't use it for anything important. Unfortunately the current landscape basically requires you to have and use Gmail if you want to guarantee that your emails arrive in the inbox of the recipient. I don't want to miss out on an apartment because my email got marked as spam, or my home internet was out for a few minutes.
 
 I use [Simple Docker Mailserver](https://docker-mailserver.github.io/docker-mailserver/latest/introduction) to handle most the heavy lifting. Notably, I have a separate tailscale pod for this service because [dovecot](https://dovecot.org) and [postfix](https://www.postfix.org) both natively support the proxy protocol, and specifically don't work behind nginx which I use for most other traffic. I primarily use it for sending emails from my server, like Nextcloud login confirmations and such.
 
