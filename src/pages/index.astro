@@ -46,7 +46,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
         bleeding edge technology. I like to write about my projects and things
         I've learned.
       </p>
-      <p>Read the blog posts or check my socials for more info.</p>
+      <p>Read the blog posts below or check my socials for more info.</p>
       {
         // only display if at least one social link is enabled
         socialCount > 0 && (
@@ -58,7 +58,58 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       }
     </section>
 
-    <section>
+    {
+      featuredPosts.length > 0 && (
+        <>
+          <section id="featured">
+            <h2>Featured Posts</h2>
+            <ul>
+              {featuredPosts.map(({ data, slug }) => (
+                <Card
+                  href={`/posts/${slug}/`}
+                  frontmatter={data}
+                  secHeading={false}
+                />
+              ))}
+            </ul>
+          </section>
+          {recentPosts.length > 0 && <Hr />}
+        </>
+      )
+    }
+
+    {
+      recentPosts.length > 0 && (
+        <section id="recent-posts">
+          <h2>Recent Posts</h2>
+          <ul>
+            {recentPosts.map(
+              ({ data, slug }, index) =>
+                index < 4 && (
+                  <Card
+                    href={`/posts/${slug}/`}
+                    frontmatter={data}
+                    secHeading={false}
+                  />
+                )
+            )}
+          </ul>
+        </section>
+      )
+    }
+
+    <div class="all-posts-btn-wrapper">
+      <LinkButton href="/posts/">
+        All Posts
+        <svg xmlns="http://www.w3.org/2000/svg"
+          ><path
+            d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
+          ></path>
+        </svg>
+      </LinkButton>
+    </div>
+
+    <section class="mb-8 mt-20">
       <h1 class="mb-4 text-3xl font-bold sm:mb-8 sm:text-5xl">What do I do?</h1>
 
       <div class="space-y-12">
@@ -66,16 +117,18 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           <p class="mb-4">
             ...I build full stack applications.
             <br /><br />
-            This is Rhombus, a a Jeopardy style competition platform with a cohesive
+            This is Rhombus, a Jeopardy style competition platform with a cohesive
             and modern user interface for hosting CTF events. Written with bleeding
-            edge tools like Svelte, TypeScript, and TailwindCSS.
+            edge tools like Rust, TypeScript, Solid.js, and TailwindCSS.
             <br /><br />
             <a
               class="link-underline"
               href="https://github.com/rhombusgg/rhombus">Go to project</a
+            > • <a class="link-underline" href="https://rhombus.gg"
+              >Go to website</a
             >
           </p>
-          <a href="https://github.com/rhombusgg/rhombus">
+          <a href="https://rhombus.gg">
             <img src="/assets/projects/rhombus.gif" />
           </a>
         </div>
@@ -91,6 +144,8 @@ const socialCount = SOCIALS.filter(social => social.active).length;
             <br /><br />
             <a class="link-underline" href="https://github.com/mbund/canvas-cli"
               >Go to project</a
+            > • <a class="link-underline" href="posts/cicd-for-university"
+              >Go to related blog post</a
             >
           </p>
           <a href="https://github.com/mbund/canvas-cli">
@@ -235,8 +290,10 @@ const socialCount = SOCIALS.filter(social => social.active).length;
         </div>
 
         <p>
-          ...and I write a blog! Read some of my posts below, or have a look at
-          some of my other projects on <a
+          ...and I write a technical blog! Read some of my <a
+            class="link-underline"
+            href="/posts">posts</a
+          >, or have a look at some of my other projects on <a
             class="link-underline"
             href="https://github.com/mbund">GitHub</a
           >.
@@ -245,57 +302,6 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     </section>
 
     <!-- <Hr /> -->
-
-    {
-      featuredPosts.length > 0 && (
-        <>
-          <section id="featured">
-            <h2>Featured</h2>
-            <ul>
-              {featuredPosts.map(({ data, slug }) => (
-                <Card
-                  href={`/posts/${slug}/`}
-                  frontmatter={data}
-                  secHeading={false}
-                />
-              ))}
-            </ul>
-          </section>
-          {recentPosts.length > 0 && <Hr />}
-        </>
-      )
-    }
-
-    {
-      recentPosts.length > 0 && (
-        <section id="recent-posts">
-          <h2>Recent Posts</h2>
-          <ul>
-            {recentPosts.map(
-              ({ data, slug }, index) =>
-                index < 4 && (
-                  <Card
-                    href={`/posts/${slug}/`}
-                    frontmatter={data}
-                    secHeading={false}
-                  />
-                )
-            )}
-          </ul>
-        </section>
-      )
-    }
-
-    <div class="all-posts-btn-wrapper">
-      <LinkButton href="/posts/">
-        All Posts
-        <svg xmlns="http://www.w3.org/2000/svg"
-          ><path
-            d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
-          ></path>
-        </svg>
-      </LinkButton>
-    </div>
   </main>
 
   <Footer />
@@ -328,7 +334,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   /* ===== Featured & Recent Posts Sections ===== */
   #featured,
   #recent-posts {
-    @apply pb-6 pt-12;
+    @apply py-6;
   }
   #featured h2,
   #recent-posts h2 {
