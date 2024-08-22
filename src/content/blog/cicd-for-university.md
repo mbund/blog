@@ -81,7 +81,7 @@ One script later which calls [`pandoc`](https://pandoc.org) with some custom CSS
   <iframe class="w-full h-full" src="/assets/cicd-for-university/MyAverageLengthJavaClassName-custom.pdf"></iframe>
 </div>
 
-It doesn't look quite the same, but it serves the same purpose, which is for graders to mark up the code. And, as a side note, Eclipse's printing is not deterministic either. If you zoom in on the code view, it will zoom in on the print too. If you change the font in the editor, it will change the font in the print. And if you change the color theme, it will also change the colors in the print. Considering that, I think the script gets close enough (and I wanted to get started on actually working on the assigned projects eventually).
+It doesn't look quite the same, but it serves the same purpose, which is for graders to mark up the code. And, as a side note, Eclipse's printing is not perfectly consistent either. If you zoom in on the code view, it will zoom in on the print too. If you change the font in the editor, it will change the font in the print. And if you change the color theme, it will also change the colors in the print. Considering that, I think the script gets close enough (and I wanted to get started on actually working on the assigned projects eventually).
 
 ### CI/CD
 
@@ -126,7 +126,7 @@ Where `CANVAS_URL` is something like `https://your.instructure.com/courses/12345
 
 ## The command line beckons
 
-My freshman year roommate once asked me how I used my computer. I wasn't sure what he meant at first. But after asking more about what he meant, it turns out that he wasn't confused by Linux or Gnome, he thought _vscode_ was my desktop environment, because I never left it. I realized that he was kind of right.
+My freshman year roommate once asked me how I used my computer. I wasn't sure what he meant at first. But after asking more, it turns out that he wasn't confused by Linux or Gnome, he thought _vscode_ was my desktop environment, because I never left it. I realized that he was kind of right.
 
 - Math homework? LaTeX, in vscode
 - CS homework? See [above](#vscode-dev-environment) if it wasn't clear that was vscode

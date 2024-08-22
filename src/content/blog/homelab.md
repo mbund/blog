@@ -17,9 +17,9 @@ In 2022 I started my homelab journey. Finally in 2023 I reached a point where I'
 
 ## Why
 
-If you're anything like me, you're the tech support person in your family. What that means in practice is that you're the one who gets called when the printer doesn't work or the internet is down. It also means that I somehow end up with everyone's old laptops and phones whenever they get an upgrade. And you know what? Hardware got really good a few years ago. Those laptops are perfectly usable with 8GB RAM each + some storage. If I just straight added up each computer's RAM, I'd have 24GB at this point, which is more than enough to run a few VMs and self hosted services.
+Over the past few years I've been collecting old laptops and phones whenever someone in my family gets an upgrade. Those "old" laptops are still perfectly good machines with 8GB RAM each + some storage. If I just straight added up each computer's RAM, I'd have 24GB at this point, which is more than enough to run a few VMs and self hosted services.
 
-At this time I also began to become more aware of the privacy implications of using cloud services. I think that it's important to be aware of what data you're giving away and to whom. Recently there have been some awesome FOSS projects which claim to match the functionality of their cloud counterparts, easily self hostable with docker, which I would really like to try out. I also wanted to learn more about networking and Linux administration, and what better way to do that than to build a homelab?
+Around this time I also began to become more aware of the privacy implications of using cloud services. I think that it's important to be aware of what data you're giving away and to whom. Recently there have been some awesome FOSS projects which claim to match the functionality of their cloud counterparts, easily self hostable with docker, which I would really like to try out. I also wanted to learn more about networking and Linux administration, and what better way to do that than to build a homelab?
 
 ## The Dream
 
