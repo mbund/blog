@@ -14,14 +14,7 @@ description: Python is often recommended for beginners, especially because of th
 
 ## Python is the Future
 
-I hear a lot of chatter like the following:
-
-- "You should learn Python because of its uses in AI and in Excel!"
-- "AI is the future, get in as early as you can!"
-- "Data science is all in Python these days, you should learn it!"
-- "Python is so easy to learn and, it's the back end to our website!"
-
-I think the major draws for Python are that it has a good data science ecosystem, and syntax which at a first glance seems simple. I've spent some time with the language over the years, but I wouldn't say I truly _know_ it. Yet somehow I can't shake this feeling that most people who recommend Python haven't gone beyond the surface level. Because given my experience with it, I could never recommend it with a straight face to anyone for production.
+Python has an incredible data science ecosystem, and syntax which at a first glance seems simple. It's often recommended for beginner programmers because power is just one `import` away. I've spent some time with the language over the years, but I wouldn't say I truly _know_ it. Yet somehow I can't shake this feeling that people are too quick to recommend Python, and that they haven't gone beyond the surface level. Because given my experience with it, I could never recommend it with a straight face to anyone for production.
 
 ## Package Management is a Nightmare
 
@@ -33,7 +26,7 @@ This is the first line of most blog posts and tutorials for getting started with
 
 Let's talk for a second about what `pip` is doing here. By running that command, you pollute your entire OS installation of Python with a particular version of `numpy`, whatever it happens to be at the time of you running the command. If you have multiple projects using `numpy`, your only option is to hope that they both are compatible with being the same version. This is a solved problem in any sane language with a lockfile, and per-project dependencies.
 
-> Okay you're right, a README just giving `pip` commands is not best practice. Real Pythonistas include a `requirements.txt` to install from!
+> Okay you're right, a README just giving `pip` commands is not best practice. Pythonistas include a `requirements.txt` to install from!
 
 No.
 
@@ -86,7 +79,7 @@ Also, `apt` and `pip` breaking my OS was the catalyst for me switching to [NixOS
 
 > Nobody uses `pip` anymore! We use conda or poetry!
 
-Admittedly I haven't used conda much, but I agree that [poetry](https://python-poetry.org) is the only good Python package manager. It has actual lockfiles and good practices. It can be translated into nix very easily. Unfortunately most of the ecosystem hasn't adopted it, and the majority of packages are raw `pip`.
+Admittedly I haven't used conda much, but I agree that [poetry](https://python-poetry.org) is the only good Python package manager (update 2024-08-27: [uv](https://github.com/astral-sh/uv) is another incredible package manager for Python!). It has actual lockfiles and good practices. It can be translated into Nix very easily. Unfortunately most of the ecosystem hasn't adopted it, and the majority of packages are raw `pip`.
 
 If you are using Python, _please please please please please_ use poetry.
 
@@ -138,7 +131,7 @@ def my_func_2():
       print("Caught!")
 ```
 
-Just `except:` will catch all exceptions (those which inherit from `BaseException`), but `except Exception:` will only catch _most_ exceptions. For example, `my_func` will catch `GeneratorExit`, which `my_func_2` won't catch it!
+Just `except:` will catch all exceptions (those which inherit from `BaseException`), but `except Exception:` will only catch _most_ exceptions. For example, `my_func` will catch `GeneratorExit`, which `my_func_2` won't catch it! Indeed, Python's syntax is very easy and intuitive, and we should recommend it to beginners.
 
 ## Sharp Corners
 
@@ -311,13 +304,13 @@ It's even paginated for us, how nice. Also, that's right. Python has a whole cla
 
 ## The I in LLM Stands For Intelligence
 
-Python is used in AI, and AI is particularly popular now, so Python is too. But following a youtube tutorial to make an AI model in 100 lines of code which starts with `import tensorflow` does not make you an expert in AI or Python. And integrating ChatGPT into your website does not put you ahead of the curve. What you've done isn't different from using the [Pokémon API](https://pokeapi.co). We've been consuming APIs for decades. You or you company won't be "left behind" if you don't start integrating AI now. You are still dependent on external libraries and services which need to be updated for the AI to perform better. We don't need yet another wrapper.
+Python is used in AI, and AI is particularly popular now, so Python is too. But following a youtube tutorial to make an AI model in 100 lines of code which starts with `import tensorflow` does not make you an expert in AI or Python. And integrating ChatGPT into your website does not put you ahead of the curve. You are still dependent on external libraries and services which need to be updated for the AI to perform better. You won't be "left behind" if you don't integrate AI today, and we don't need yet another LLM wrapper.
 
-There are people actually doing novel research in AI, and they got their PhDs before 2022. If you're interested in advancing AI, become a researcher and go deep. The next evolution is not a better prompt to an LLM, or even an LLM at all. Don't just be a consumer.
+There are people actually doing novel research in AI. If you're interested in advancing AI, become a researcher and go deep. The next evolution is not a better prompt to an LLM, or even an LLM at all. Don't just be a consumer.
 
 Why can't we objectively analyze AI features as...features? Do an A/B test and see if it really is beneficial? An incremental rollout, perhaps? Internally, sure, go ahead and train a minimum viable custom model on your company's data in the fastest way you can. Do whatever it takes to prove if your idea can work. But if it doesn't work, _don't roll it out_, and try again in a year if it seems like there is progress. Timebox it. Figure out the cost, and factor in both the astronomical API or training fees, and also the time that you, the 6-figure salaried engineer costs. If the research looks promising, then rewrite it to be more robust, and only then begin to roll it out.
 
-However, everyone knows that in a corporate environment, there is nothing more permanent than a temporary solution. So I still caution against first-pass Python scripts to prove out the idea, unless there is very, _very_, clear understanding that everything you write will be thrown into Mount Doom, never to be seen again.
+However, in a corporate environment, there is nothing more permanent than a temporary solution. So I still caution against first-pass Python scripts to prove out the idea, unless there is very, _very_, clear understanding that everything you write will be thrown into Mount Doom, never to be seen again.
 
 ## Conclusion
 

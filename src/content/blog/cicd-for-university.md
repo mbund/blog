@@ -3,7 +3,7 @@ author: Mark Bundschuh
 pubDatetime: 2024-07-28
 title: Unnecessary CI/CD for university students
 postSlug: cicd-for-university
-featured: true
+featured: false
 draft: false
 tags:
   - infrastructure
@@ -124,7 +124,7 @@ jobs:
 
 Where `CANVAS_URL` is something like `https://your.instructure.com/courses/123456/assignments/7891234`, which is the url that you get when you navigate to the assignment on the actual site.
 
-## The command line beckons
+## The Command Line Beckons
 
 My freshman year roommate once asked me how I used my computer. I wasn't sure what he meant at first. But after asking more, it turns out that he wasn't confused by Linux or Gnome, he thought _vscode_ was my desktop environment, because I never left it. I realized that he was kind of right.
 
@@ -148,7 +148,7 @@ It is a single static binary written in Rust. There is also functionality to use
 
 (side note: I don't use LaTeX anymore, instead I use [Typst](https://typst.app) which is better in every way)
 
-## Linting so I don't lose points
+## Linting So I Don't Lose Points
 
 OSU's Computer Science curriculum also includes C and x86 assembly courses, known as Systems I and II. Systems I has an extensive style guide for writing C code, which includes rules such as:
 
@@ -255,6 +255,220 @@ Here's the high level overview of the complete workflow
 - Submit the `.zip` to the Canvas assignment with [`canvas-cli`](#the-command-line-beckons) 🚀
 
 Notice that I didn't actually use the Canvas Submit Action. Instead, I just pulled the latest [GitHub Release from `canvas-cli`](https://github.com/mbund/canvas-cli/releases) since it is just a single static binary.
+
+## A Fateful Decision
+
+At OSU you have the option between 3 group project courses as a Junior. Web dev with Ruby on Rails, Game dev with C# (using Monogame/XNA), and compiler dev with Java. For some reason I chose Game dev 🤷.
+
+### Argentblua
+
+On my laptop I run Fedora Silverblue, an atomic linux OS. The game design class is in C# with [Monogame](https://monogame.net). The recommended IDE is Visual Studio. This is a problem. Fortunately Monogame has instructions for install on Linux, though only for `Ubuntu 20.04`. No consideration has been given to Fedora, much less any immutable variant...so we're going to wing it. All we need is the dotnet toolchain, and some GTK libraries. I whipped up a [Nix](https://nixos.org) flake for it and...it didn't work. There is a special app called the MonoGame Content Builder which is required to bundle assets. It is configued with hard coded paths to look for fonts in. So, to package it for Nix would require patching. Instead, I just gave up and made a regular Fedora [Toolbox](https://github.com/containers/toolbox), installed dotnet and all the dependencies, and put vscode in it and just launch that vscode instance when I need to do work.
+
+### Simple CI/CD
+
+Let's start with some simple formatting and linting on PRs. C# has a built in [.editorconfig](https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/code-style-rule-options) file which can configure lints like making [Remove unnecessary using directives (IDE0005)](https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/style-rules/ide0005) cause an error instead of a warning. For formatting, I went with [csharpier](https://github.com/belav/csharpier) because the default C# formatter leaves a lot to be desired (why does it allow trailing whitespace after a line???). Now let's see what happens when we make a PR.
+
+<img src="/assets/cicd-for-university/pr-lint-format.png">
+
+Beautiful.
+
+For completeness sake, I'll include the workflows here, though they are very straight forward.
+
+```yaml
+name: Check Formatting
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    name: Check Formatting
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Install dependencies
+        run: dotnet tool restore
+
+      - name: Check Formatting
+        run: dotnet csharpier --check .
+```
+
+And the `lint.yaml` just replaces the final step with `dotnet format analyzers project.csproj --verify-no-changes`.
+
+### WASM Build
+
+We're not even close to done yet though. The game is entirely single player written in C# with [Monogame](https://monogame.net) as I've noted before. I also happen to know that C# has [Blazor](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor) which compiles C# to WASM and uses it as a frontend framework. Theoretically, it _should_ be possible to compile the game to WASM, run it in the browser, and even have the preview of the current PR available. Earlier I said that "For some reason I chose Game dev 🤷". Let's just say that this idea was not an insignificant part in me making that decision.
+
+I expected it to be pretty difficult though, basically adding in a whole new platform to support. It turns out there is a (sister?) project called [KNI](https://github.com/kniEngine/kni) which is a mostly-Monogame compatible C# game engine that is able to compile to WASM. But, as it is a class project, I can't just say we are switching game engines. My group is already tired of me adding linting rules. I can't just upend the whole build system. I need a system that can be pure MonoGame on the desktop, and KNI on the web.
+
+The C# build system is...unique. The modifications I make will still need to work in Visual Studio on Windows, in VSCode on Mac and Linux, and of course on the Web. Time to learn about the `.csproj` file format! 
+
+We initialize KNI's [BlazorGL.NetCore](https://github.com/kniEngine/kni/tree/773cb4f7a42542a9fe4bc5c3fd9de07e5f3c8bfa/Templates/VisualStudio2022/ProjectTemplates/BlazorGL.NetCore) template into a new `webbuild` directory at the root of our existing MonoGame project. The directory structure will look like this:
+
+```bash
+project.csproj # generated from MonoGame template
+project.sln    # generated from MonoGame template
+Program.cs     # generated from MonoGame template (main entrypoint)
+Main.cs        # generated from MonoGame template (main game class/loop)
+# ...
+webbuild/
+  KNIProj.BlazorGL/         # generated from BlazorGL.NetCore template
+    KNIProj.BlazorGL.csproj # generated from BlazorGL.NetCore template
+    Program.cs              # generated from BlazorGL.NetCore template
+    # ...
+```
+
+Side note: Visual Studio has project template syntax which this is using. This requires booting up a Windows VM, installing Visual Studio, installing the KNI dependencies, running the template, then finally copying the template out of the Windows VM. Here is a snippet as an example (note the `$safeprojectname$`)
+
+```cs
+namespace $safeprojectname$
+{
+    /// <summary>
+    /// This is the main type for your game.
+    /// </summary>
+    public class $safeprojectname$Game : Game
+    {
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
+
+        public $safeprojectname$Game()
+        {
+            graphics = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
+        }
+```
+
+So now we have two completely independent C# projects in the same repo. We need to link them together somehow. Basically, we want to overwrite the root's `Project.cs` with our own in the `webbuild/KNIProj.BlazorGL` directory. The root's `Project.cs` is just a thin wrapper, here is the entire contents, where `Main` is the class defined in `Main.cs`. 
+
+```cs
+using var game = new Main();
+game.Run();
+```
+
+Let's edit the `webbuild/KNIProj.BlazorGL/Pages/Index.razor.cs`, which is the entrypoint of the Blazor WASM C# app to initialize and call our MonoGame app.
+
+```cs
+[JSInvokable]
+public void TickDotNet()
+{
+    // init game
+    if (_game == null)
+    {
+        _game = new Main();
+        _game.Run();
+    }
+
+    // run gameloop
+    _game.Tick();
+}
+```
+
+But we can't just call `Main` here! It is in a different project. We need to introduce a shared C# project which refers to both projects to be able to link them together. Let's create some files in `webbuild/KNIProj.Shared/`.
+
+Notably, we make a `KNIProj.Shared.shproj` which includes (among lots of boilerplate which has been omitted)
+
+```xml
+<Import Project="KNIProj.Shared.projitems" Label="Shared" />
+<Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CodeSharing\Microsoft.CodeSharing.CSharp.targets" />
+```
+
+Then we make a `KNIProj.Shared.projitems` which includes (again, sans boilerplate)
+
+```xml
+<ItemGroup>
+  <Compile Include="$(MSBuildThisFileDirectory)\..\..\**\*.cs" />
+  <Compile Remove="$(MSBuildThisFileDirectory)\..\..\Program.cs" />
+</ItemGroup>
+```
+
+We go up two directories to include files from the root project. We include all `.cs` files in the root, and exclude the old entrypoint `Program.cs` from it, because we are now using our new `Index.razor.cs` to initialize `Main`.
+
+Creating this `webbuild/` directory actually broke the build of the root project though. To fix we can edit the main `project.csproj` and exclude the entire `webbuild/` directory from the root MonoGame build:
+
+```xml
+<ItemGroup>
+  <Content Remove="webbuild\**" />
+  <Compile Remove="webbuild\**" />
+  <EmbeddedResource Remove="webbuild\**" />
+  <None Remove="webbuild\**" />
+</ItemGroup>
+```
+
+Awesome! Now we can build our main project like before any of this (with a simple `dotnet run`, or pressing `F5` in Visual Studio). To build the `webbuild`, we run:
+
+```bash
+dotnet publish webbuild/KNIProj.BlazorGL/KNIProj.BlazorGL.csproj -c Release -o release --nologo
+```
+
+This creates a `release/wwwroot` directory which we can serve with any static file server. A simple `python3 -m http.server`, and we can view it in the browser!
+
+<img src="/assets/cicd-for-university/link-wasm.gif">
+
+Surprisingly, drawing, the keyboard input, and everything just works! `Console.WriteLine` gets converted to JavaScript's `console.log` and more. The only thing that needed some finagling was reading files from disk, like the sprites. But overall, KNI/Blazor handles everything very well!
+
+### PR Previews
+
+Let's take everything we've done so far and put it into a GitHub Action. We want to build the MonoGame project, build the WASM project, and deploy the WASM project to GitHub Pages. We can use the [rossjrw/pr-preview-action](https://github.com/rossjrw/pr-preview-action) which commits static files to the `gh-pages` branch of the repo. It doesn't support the new `actions/deploy-pages` method of deploying to GitHub Pages, but it is simple and works well.
+
+```yaml
+name: Deploy MonoGame Web PR Preview
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency: preview-${{ github.ref }}
+
+jobs:
+  preview-on-github-pages:
+    name: Build and Preview
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET Core SDK
+        if: github.event.action != 'closed'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Build .NET Core Project
+        if: github.event.action != 'closed'
+        run: dotnet build
+
+      - name: Publish .NET Core Project
+        if: github.event.action != 'closed'
+        run: dotnet publish webbuild/KNIProj.BlazorGL/KNIProj.BlazorGL.csproj -c Release -o release --nologo && cp -r Content/bin/DesktopGL/Content release/wwwroot
+
+      - name: Deploy preview
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: release/wwwroot
+```
+
+So now when a PR is opened:
+
+<img src="/assets/cicd-for-university/pr-preview-action.png">
+
+Clicking on the link will take you to the PR preview, where you can see the game running in the browser! This also has the added benefit of adding an implicit build check CI action, to make sure that the PR still builds and runs. GitHub is also able to parse out the output of the `dotnet build` command, and annotate the PR with generated errors.
 
 ## Conclusion
 

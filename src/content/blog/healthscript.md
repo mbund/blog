@@ -3,7 +3,7 @@ author: Mark Bundschuh
 pubDatetime: 2024-07-06
 title: The missing DSL for health checks
 postSlug: healthscript
-featured: true
+featured: false
 draft: false
 tags:
   - ctf

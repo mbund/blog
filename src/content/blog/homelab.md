@@ -3,7 +3,7 @@ author: Mark Bundschuh
 pubDatetime: 2023-12-08
 title: The start of a homelabbing journey
 postSlug: homelab
-featured: true
+featured: false
 draft: false
 tags:
   - homelab

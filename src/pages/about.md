@@ -7,6 +7,6 @@ title: "About Me"
 
 I'm a software developer who loves to learn and build things. I've recently been working with Rust and TypeScript to build web applications.
 
-As President of [Cybersecurity Club at OSU](https://osucyber.club), I've had the opportunity to host [BuckeyeCTF](https://ctf.osucyber.club), a cybersecurity competition for students at Ohio State and 100s of participants online from all around the world.
+As President of [Cybersecurity Club at OSU](https://osucyber.club), I've had the opportunity to host [BuckeyeCTF](https://ctf.osucyber.club), a cybersecurity competition for 100s of students at Ohio State and 1000s of participants online from all around the world.
 
-I also self host many services on my home server, including portions of this website. See my [Homelab](/posts/homelab) post to see what I'm running.
+I also self host many services on my home server, including portions of this website. See my [Homelab](/posts/homelab) post to see what I'm running. Be sure to check out my other [posts](/posts) as well!
