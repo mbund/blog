@@ -1,7 +1,7 @@
 ---
 author: Mark Bundschuh
 pubDatetime: 2024-12-16
-title: Advanced GitHub
+title: Advanced GitHub Techniques
 postSlug: advanced-github
 featured: false
 draft: false
@@ -163,6 +163,14 @@ GitHub has an incredible powerful CLI tool called [`gh`](https://github.com/cli/
 
 I can't stress how many features it has. I'd really suggest checking it out if you haven't already.
 
+## GH Archive
+
+There is a third party project called the [GH Archive](https://www.gharchive.org/) which archives all public events on GitHub. You can download the data and analyze it to see what is happening on GitHub.
+
+> GitHub provides 15+ event types, which range from new commits and fork events, to opening new tickets, commenting, and adding members to a project. These events are aggregated into hourly archives, which you can access with any HTTP client
+
+The dataset is also provided in Google BigQuery, which makes it easy to query and analyze the data.
+
 ## README Customization
 
 Here are some README tricks you may have seen out in the wild, and how to do them.
@@ -216,7 +224,7 @@ https://docs.rs/tokio/badge.svg
 
 produces <img alt="docs build status badge" class="not-prose inline-block align-text-top" src="https://docs.rs/tokio/badge.svg"> which says if the documentation was able to build successfully.
 
-In a recent [post of mine](http://localhost:4321/posts/healthscript) I created my own badge service for health checks <img alt="current health of example.com" class="not-prose inline-block align-text-top" src="https://healthscript.mbund.dev/https://example.com">
+In a recent [post of mine](/posts/healthscript) I created my own badge service for health checks <img alt="current health of example.com" class="not-prose inline-block align-text-top" src="https://healthscript.mbund.dev/https://example.com">
 
 And here's a pro markdown tip for images, since those url lines can get long:
 
@@ -322,7 +330,7 @@ Or are you?
 
 When you include a remote image in your README, it is cached by GitHub for a certain amount of time and becomes a `camo.githubusercontent.com` url. This is primarily so that visiting your repo doesn't leak people's IP addresses (because of the `GET` request to the remote server), and also so that the remote server is not hammered by requests. But, the cache does update decently frequently, about every 30 seconds or so.
 
-In my [homelab](http://localhost:4321/posts/homelab/#epic-readmemd) (where I talk about this same thing), I export Grafana charts publicly. I then host a service that, upon request, spawns a Chromium instance to take a screenshot of the chart and returns it. This way, I can embed live charts in my READMEs.
+In my [homelab](/posts/homelab/#epic-readmemd) (where I talk about this same thing), I export Grafana charts publicly. I then host a service that, upon request, spawns a Chromium instance to take a screenshot of the chart and returns it. This way, I can embed live charts in my READMEs.
 
 <a href="https://grafana.mbund.org/d/b250375b-77ce-456f-9c27-6c38221dd21a/misc?orgId=1&viewPanel=3"><img alt="server uptime" src="https://grafana-fetch-cache.mbund.org/server-uptime" width="400px"></a>
 

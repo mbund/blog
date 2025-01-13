@@ -4,7 +4,7 @@ export const SITE: Site = {
   website: "https://mbund.dev/",
   author: "Mark Bundschuh",
   desc: "Computer Science and Engineering Student at the Ohio State University. I like to write about my projects and things I've learned.",
-  title: "Mark Bundschuh",
+  title: "Mark's Blog",
   ogImage: "og.png",
   lightAndDarkMode: true,
   postPerPage: 5,

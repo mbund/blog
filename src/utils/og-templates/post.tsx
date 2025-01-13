@@ -62,6 +62,7 @@ export default (post: CollectionEntry<"blog">) => {
           >
             {post.data.title}
           </p>
+          <p style={{ fontSize: 28 }}>{post.data.description}</p>
           <div
             style={{
               display: "flex",
