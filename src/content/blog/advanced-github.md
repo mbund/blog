@@ -21,7 +21,7 @@ For reference, my GitHub username is `mbund`, and I will be using myself as an e
 
 ## Public SSH Keys
 
-If you've authenticated Git with SSH keys (under [github.com/settings/keys](https://github.com/settings/keys)), they are actually publicly available at `github.com/<username>.keys`. For example, my public keys are available at [github.com/mbund.keys](https://github.com/mbund.keys). Initially, this might sound like a security risk, but they are just public keys so it is safe to share them (though it is good to be aware of this). In my opinion, it is actually really convenient to have them available like this.
+If you've added SSH keys (under [github.com/settings/keys](https://github.com/settings/keys)), they are actually publicly available at `github.com/<username>.keys`. For example, my public keys are available at [github.com/mbund.keys](https://github.com/mbund.keys). Initially, this might sound like a security risk, but they are just public keys so it is safe to share them (though it is good to be aware of this). In my opinion, it is actually really convenient to have them available like this.
 
 Say you're setting up a server and you want to add your public key to the `authorized_keys` file. You can just run the following command:
 
@@ -29,7 +29,7 @@ Say you're setting up a server and you want to add your public key to the `autho
 curl https://github.com/mbund.keys >> ~/.ssh/authorized_keys
 ```
 
-The format that the endpoint hosts is one key per line, exactly like `authorized_keys`. In fact, this is what the Ubuntu Server installer is doing when you select `Github` from `Import SSH identity`.
+It is formatted as one key per line, exactly like `authorized_keys`. In fact, this is what the Ubuntu Server installer is doing when you select `Github` from `Import SSH identity`.
 
 <img alt="Ubuntu server installation on Profile setup screen showing the Import SSH Identity prompt" src="/assets/advanced-github/ubuntu-server-install.png">
 
