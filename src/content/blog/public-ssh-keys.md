@@ -63,7 +63,7 @@ A couple notes about the above query:
 
 Now let's run the query.
 
-<img alt="Google BigQuery Studio executing the query and showing the first few results" src="/assets/public-ssh-keys/bigquery.png">
+![Google BigQuery Studio executing the query and showing the first few results](/assets/public-ssh-keys/bigquery.png)
 
 After running the query, I now have a list of all users on GitHub, or at least all those who have done at least one action on GitHub. As of 2024-12-18, there are about 77,000,000 users.
 
@@ -121,7 +121,7 @@ wish.WithPublicKeyAuth(func(ctx ssh.Context, key ssh.PublicKey) bool {
 
 This middleware looks up the user by the public SSH key they present. If they're found, we inject their GitHub username and public key for future use while rendering. Then, I can write a little UI for it to show when you connect:
 
-<img alt="The Wish app which shows statistics" src="/assets/public-ssh-keys/ssh.png">
+![The Wish app which shows statistics](/assets/public-ssh-keys/ssh.png)
 
 I'd encourage you to try to connect too! Run `ssh keys.mbund.dev` now! Make sure to wave to the next person!
 
@@ -162,6 +162,22 @@ Of <span class="text-skin-accent" id="numKeys">n</span> total SSH keys found, he
   }))
 </script>
 
+## Who has the most keys?
+
+For privacy reasons I won't say _who_ has the most keys. But at the time of writing, the scanner has found someone with `2992` keys! Their `authorized_keys` file 8.3MB on its own! I really wonder why they need so many. And by the way, they are all RSA.
+
+Also, their account was created 447 days ago, so on average they added 1 key every 4 hours since their account creation!
+
+Here's what the query to find this looked like:
+
+```sql
+SELECT COUNT(*) as num_keys, username
+FROM keys
+GROUP BY username
+ORDER BY num_keys DESC
+LIMIT 100
+```
+
 ## Opting out
 
 If you're reading this and feel uncomfortable with me having your public SSH key, there are two ways to opt out. Opting out means that your keys are deleted from the database, and they will be prevented from being added back in the future. If you can log in with `ssh keys.mbund.dev`, press `o` to opt out. If your key hasn't been scanned yet and you can't log in, you can go to [keys.mbund.dev](https://keys.mbund.dev) on your browser, OAuth with GitHub to ensure that you are who you say you are, and switch the toggle off. When you OAuth, the only information you present is your username (no email or anything else, and also I can't do anything on your behalf). I do not store any extra information about the users decided to opt out, other than the fact that they did, so I won't even know what method you used.
@@ -178,10 +194,38 @@ SSH sessions have fingerprints, very similar to browsers. For example, you get t
 
 `ssh` will try your keys one at a time until hopefully one works. A new connection is formed for each key. So, on every connection attempt, you could cache connecting sessions by their client version, username, and IP for a few seconds, and gather all public keys tried that are likely the same person. If one of them matches a known key in your large database, you know that the other keys also belong to the same person, and can update the database to be even larger.
 
-## Finding alt accounts
+## Authentication
 
-There is nothing stopping two different GitHub users from uploading the same public key. Usually, this means someone renamed their GitHub account. But it can also mean that they have multiple GitHub accounts. In any case, it means that the accounts are very highly related.
+GitHub actually stops two users from uploading the same key. If you try, you get the following error:
+
+![GitHub error: "Key is already in use"](/assets/public-ssh-keys/unique.png)
+
+This means that if you host an SSH server and someone successfully logs in with a key on their GitHub, you can be sure it is them. There is no extra log in step. This is how my SSH app is able to tell you your GitHub username when you log in, since there is only one option! This makes a lot of sense too. This is how you can do a `git clone` over SSH, even to a private repo.
+
+This also lets you query whether a particular key is found in GitHub very easily, though it doesn't tell you the username of who has the key.
+
+## Renamed accounts
+
+However the scanner does find multiple usernames with the same keys. This means someone renamed their GitHub account, and the scanner found the username before and after.
+
+I won't share any usernames for privacy reasons, but the query is pretty simple:
+
+```sql
+SELECT k1.ssh_key, k1.username AS username1, k2.username AS username2 FROM keys AS k1 
+JOIN keys AS k2 ON k1.ssh_key = k2.ssh_key 
+WHERE k1.username < k2.username AND k1.ssh_key != '';
+```
+
+## Where is the source code? Can I have the database?
+
+I won't be publishing the source code for this project. I don't want it to be trivial to spam GitHub's server using my tool. I've outlined more than enough information to reproduce it yourself if you have a good reason to. I also won't be publicly releasing the database. I will leave that to GitHub if they decide to, since theirs would be more complete, and less taxing on their servers. This project was for research purposes only. However, if you have an idea for a query that I should run, leave a comment below!
 
 ## Conclusion
 
 This was a super fun project! If you have any other ideas for a large SSH key database be sure to leave them in the comments. And try to connect to `ssh keys.mbund.dev` if you have not already!
+
+## Update
+
+Well, it turns out that someone else did the same thing, but more efficiently 2 years ago: [whoami](https://words.filippo.io/dispatches/whoami-updated)
+
+I still had fun making a beautiful TUI with the charm stack, and I got the chance to hone my Go skills. So, it was not for nothing. Hope you still enjoyed the post!
