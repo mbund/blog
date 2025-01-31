@@ -164,7 +164,7 @@ Of <span class="text-skin-accent" id="numKeys">n</span> total SSH keys found, he
 
 ## Who has the most keys?
 
-For privacy reasons I won't say _who_ has the most keys. But at the time of writing, the scanner has found someone with `2992` keys! Their `authorized_keys` file 8.3MB on its own! I really wonder why they need so many. And by the way, they are all RSA.
+For privacy reasons I won't say _who_ has the most keys. But at the time of writing, the scanner has found someone with `2992` keys! Their `authorized_keys` file is 8.3MB on its own! I really wonder why they need so many. And by the way, they are all RSA.
 
 Also, their account was created 447 days ago, so on average they added 1 key every 4 hours since their account creation!
 
@@ -177,6 +177,10 @@ GROUP BY username
 ORDER BY num_keys DESC
 LIMIT 100
 ```
+
+While the person with the most keys didn't have any contact information, the runner up with 2022 keys did. When I reached out to ask what he used so many keys for, this is what `francois141` said:
+
+> We had a script for a research project that was registering a public key each time we cloned the repository. I guess this is the reason why I have so many public keys...I didn't know I had so many keys.
 
 ## Opting out
 
