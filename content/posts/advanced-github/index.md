@@ -11,7 +11,8 @@ tags:
   - CI/CD
   - Badge
   - YAML
-description: A somewhat comprehensive guide to neat features and tricks on GitHub that you might not know about.
+description: &desc A somewhat comprehensive guide to neat features and tricks on GitHub that you might not know about.
+summary: *desc
 ---
 
 ## Introduction

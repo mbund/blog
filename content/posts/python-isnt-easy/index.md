@@ -8,7 +8,8 @@ categories:
 tags:
   - Python
   - Rust
-description: Python is often recommended for beginners, especially because of the recent AI bubble. But I'd argue it has a lot of issues.
+description: &desc Python is often recommended for beginners, especially because of the recent AI bubble. But I'd argue it has a lot of issues.
+summary: *desc
 ---
 
 ## Python is the Future

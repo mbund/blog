@@ -12,7 +12,8 @@ tags:
   - SQL
   - Turso
   - Fly.io
-description: "I made a really large authorized_keys file, see if you can log in to my server: ssh keys.mbund.dev"
+description: &desc "I made a really large authorized_keys file, see if you can log in to my server: ssh keys.mbund.dev"
+summary: *desc
 ---
 
 ## Introduction

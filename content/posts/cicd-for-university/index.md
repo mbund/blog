@@ -14,7 +14,8 @@ tags:
   - Canvas LMS
   - CI/CD
   - CLI
-description: Classes tend to have submission formats that are followed throughout the whole semester. We can automate that for (minimal) profit.
+description: &desc Classes tend to have submission formats that are followed throughout the whole semester. We can automate that for (minimal) profit.
+summary: *desc
 ---
 
 ## Anything but Eclipse

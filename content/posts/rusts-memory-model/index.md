@@ -9,12 +9,14 @@ tags:
   - Rust
   - Go
   - Async Rust
+  - Zig
   - Performance
   - Memory Management
   - Garbage Collection
   - GC
   - Tokio
-description: "I talk about my thoughts after a few years of experience using Rust"
+description: &desc "I talk about my thoughts after a few years of experience using Rust"
+summary: *desc
 ---
 
 Rust famously avoids using a garbage collector with its borrow checker. But the borrow checker is not magic. Rust programmers must follow borrowing rules, understand move semantics, and hint the compiler with lifetimes. These abstractions make it so that you never think about `malloc` and `free`, don't have null pointer dereferences and memory safety issues in general, all without sacrificing performance by having a garbage collector running every now and then.

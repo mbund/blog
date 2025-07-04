@@ -13,7 +13,8 @@ tags:
   - Badge
   - Healthscript
   - Fly.io
-description: Health checks let devs and users know the status of a service. Let's see what it looks like to make it as easy as possible to write one.
+description: &desc Health checks let devs and users know the status of a service. Let's see what it looks like to make it as easy as possible to write one.
+summary: *desc
 ---
 
 ## Who needs health checks?
