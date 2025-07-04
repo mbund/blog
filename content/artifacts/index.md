@@ -187,20 +187,19 @@ This is a living document that I update whenever I stumble upon something amazin
 {{< reading-author name="Brian Raiter" alias="breadbox" site="https://muppetlabs.com/~breadbox" >}}
 {{< /reading-article >}}
 
-## Tools
+## Stars
 
 <div class="flex flex-col gap-4">
-
 {{< github repo="sectordistrict/intentrace" showThumbnail=false >}}
-
 {{< github repo="cilium/pwru" showThumbnail=false >}}
-
 {{< github repo="ynqa/jnv" showThumbnail=false >}}
-
 {{< github repo="typst/typst" showThumbnail=false >}}
-
 {{< github repo="NixOS/nix" showThumbnail=false >}}
-
+{{< github repo="jj-vcs/jj" showThumbnail=false >}}
+{{< github repo="zizmorcore/zizmor" showThumbnail=false >}}
+{{< github repo="charmbracelet/vhs" showThumbnail=false >}}
+{{< github repo="charmbracelet/bubbletea" showThumbnail=false >}}
+{{< github repo="kashalls/kromgo" showThumbnail=false >}}
 </div>
 
 ## Videos
