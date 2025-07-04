@@ -1,0 +1,42 @@
+{{- .Get "name" -}}
+
+{{- if .Get "alias" }}
+aka <em>{{ .Get "alias" -}}</em>
+{{- end -}}
+<div class="text-gray-600 items-center flex-wrap" style="display: inline-flex">
+{{- if .Get "github" -}}
+<a href="https://github.com/{{- .Get "github" -}}" aria-label="GitHub" class="ml-2" target="_blank">
+    {{- partial "icon.html" "github" -}}
+</a>
+{{- end -}}
+
+{{- if .Get "twitter" -}}
+<a href="https://twitter.com/{{- .Get "twitter" -}}" aria-label="Twitter" class="ml-2" target="_blank">
+    {{- partial "icon.html" "twitter" -}}
+</a>
+{{- end -}}
+
+{{- if .Get "mastodon" -}}
+<a href="{{- .Get "mastodon" -}}" class="ml-2" aria-label="Mastodon" target="_blank">
+    {{- partial "icon.html" "mastodon" -}}
+</a>
+{{- end -}}
+
+{{- if .Get "bsky" -}}
+<a href="{{- .Get "bsky" -}}" class="ml-2" aria-label="Bluesky" target="_blank">
+    {{- partial "icon.html" "bluesky" -}}
+</a>
+{{- end -}}
+
+{{- if .Get "site" -}}
+<a href="{{- .Get "site" -}}" class="ml-2" aria-label="Website" target="_blank">
+    {{- partial "icon.html" "globe" -}}
+</a>
+{{- end -}}
+
+{{- if .Get "site2" -}}
+<a href="{{- .Get "site2" -}}" class="ml-2" aria-label="Second website" target="_blank">
+    {{- partial "icon.html" "globe" -}}
+</a>
+{{- end -}}
+</div>

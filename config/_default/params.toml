@@ -14,6 +14,8 @@ enableCodeCopy = false
 
 replyByEmail = false
 
+copyright = "© 2023-{ year } Mark Bundschuh. All opinions are my own."
+
 # mainSections = ["section1", "section2"]
 # robots = ""
 
@@ -96,7 +98,7 @@ forgejoDefaultServer = "https://v8.next.forgejo.org"
   layoutBackgroundBlur = true # only used when heroStyle equals background or thumbAndBackground
   layoutBackgroundHeaderSpace = true # only used when heroStyle equals background
   showBreadcrumbs = false
-  showSummary = false
+  showSummary = true
   showViews = false
   showLikes = false
   showTableOfContents = false
