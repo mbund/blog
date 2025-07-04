@@ -14,7 +14,8 @@ tags:
   - nginx
   - Grafana
   - Prometheus
-description: Everyone's homelab is bespoke. This is the start of my self hosting journey, where I talk about my homelabbing philosophy and the services I'm running.
+description: &desc Everyone's homelab is bespoke. This is the start of my self hosting journey, where I talk about my homelabbing philosophy and the services I'm running.
+summary: *desc
 ---
 
 In 2022 I started my homelab journey. Finally in 2023 I reached a point where I'm happy with my setup and I'm ready to share it with the world. This post is meant to fossilize its current state and to talk about some of the decisions I made along the way.
@@ -136,6 +137,8 @@ They allow any TCP ports too which is neat, but no UDP so you won't be [wireguar
 Overall for a single user, I think Cloudflare Tunnel is a great solution. However keep in mind the vendor lock in of using Cloudflare. No one else offers this kind of service to my knowledge so if you get more traffic than expected, you will have to pay or get kicked off. Also, by using Cloudflare in general you can be more secure but you will also contribute to the growing consolidation of internet traffic through a single company. Weigh the pros and cons for yourself.
 
 For me, I started out with Cloudflare Tunnel but I have since moved to a self hosted (and more interesting) solution.
+
+_Edit 2025-07-03: Cloudflare Tunnels do not in fact support arbitrary TCP port forwarding to a domain, they are HTTP only. It does make sense if you think about it, HTTP has a `Host:` header which lets you proxy to the right place. Arbitrary TCP ports would mean they effectively have to give you your own private IPv4 address, which considering that the service is free, obviously can't work. Perhaps if everything used [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication), an extension of TLS which gives any TCP service both encryption and a hostname, then routing could use that hostname behind a single IP. However we do not live in that world._
 
 #### VPN and private ingress
 
