@@ -10,6 +10,7 @@ tags:
   - Networking
   - Databases
   - Web development
+  - Kubernetes
 description: &desc "A curated selection of content I think is worth your time"
 summary: *desc
 showDate: false
