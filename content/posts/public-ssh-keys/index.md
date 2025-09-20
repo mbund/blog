@@ -18,6 +18,11 @@ summary: *desc
 
 ## Introduction
 
+{{< alert >}}
+`keys.mbund.dev` is down right now.
+Apologies for the inconvenience.
+{{< /alert >}}
+
 tldr: run `ssh keys.mbund.dev`
 
 In a recent [post of mine](/posts/advanced-github) I discussed some hidden features of GitHub, including one interesting one which I will repeat here:
