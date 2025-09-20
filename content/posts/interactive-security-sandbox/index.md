@@ -1,6 +1,6 @@
 ---
 date: 2025-09-10
-title: An Interactive Security Sandbox For Developers
+title: Creating an Interactive Security Sandbox for Developers
 draft: false
 categories:
   - Programming
@@ -252,7 +252,7 @@ It fulfilled its purpose as a POC for a research paper, but in my opinion a rewr
 
 In my opinion the biggest reason not to work with `ptrace` is the sheer *complexity* of it.
 There are so many edge cases to worry about (as seen by the hoops MBOX had to jump through).
-Also, portability between architectures is poor because the set of syscalls per architecture.
+Also, portability between architectures is poor because the set of syscalls varies.
 Deep knowledge of all syscalls (to determine their safety characteristics) on every supported architecture is required.
 New syscalls can be added which may need to be restricted too so the tool needs to disable itself on kernels that are too new.
 
@@ -282,7 +282,7 @@ This is a much less fragile approach compared to syscall interposition when impl
 Note that this check happens after the standard user/group permissions checks, and that an LSM can even deny `root` the ability to perform actions.
 
 The primary goal of an LSM is to reduce the attack surface of a compromised program.
-They used to be more useful when production servers ran binaries directly, to make sure that it can't read files isn't supposed to for example.
+They used to be more useful when production servers ran binaries directly, to make sure that it can't read files it isn't supposed to for example.
 Nowadays we have Docker, so the process is more isolated by default.
 Nevertheless, it is still productive to have a look at the LSM ecosystem.
 
@@ -726,6 +726,8 @@ Normally the verifier prevents this, but we are doing crazy stuff, so you have t
 
 Also, keep in mind that the performance is not great.
 It is best to keep as much as possible inside eBPF, and only reach out to a userspace helper for I/O tasks.
+For my use case, already approved paths can be determined in pure eBPF, so it should be as fast as any other LSM like AppArmor (which is to say, very little overhead).
+If I reach out to userspace, it is to block intentionally for a long time, so I don't even really care about the performance of it.
 
 ### Stacking LSMs
 
@@ -790,6 +792,9 @@ I may develop a tool in the future which hooks all syscalls and sleepable LSM ho
 
 I can finally start to implement `cordon`.
 My userspace helper simply takes in some information and shows a [bubbletea](https://github.com/charmbracelet/bubbletea) dialog styled with [lipgloss](https://github.com/charmbracelet/lipgloss), and allows the user to approve or deny the operation.
+
+With it, I can sandbox `bash` for example.
+This is useful if you ever want to `curl ... | bash` to watch what it is doing.
 It looks like this:
 
 ![Demo of running ./cordon /bin/bash](demo.gif)
@@ -1018,6 +1023,9 @@ Also, the SNI can differ from the `Host` in the HTTP header anyways, so it'd be 
 Overall, `cordon` is not ready, and is still highly insecure.
 It turns out that it takes a lot of effort to build robust and secure software.
 I hope to spend more time in the future developing the project and seeing how far I can take it.
+
+My end goal would be to have some kind of daemon watching for programs executing in directories with `.git` in it.
+Then it can automatically insert itself and approve per-project based permissions.
 
 If you're interested in it, check out the source code at [mbund/cordon](https://github.com/mbund/cordon) for the full implementation, and for updates on the future status of the project.
 
