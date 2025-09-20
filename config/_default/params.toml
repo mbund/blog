@@ -88,7 +88,8 @@ forgejoDefaultServer = "https://v8.next.forgejo.org"
   showCategoryOnly = true # use showTaxonomies OR showCategoryOnly, not both
   showAuthorsBadges = false
   showWordCount = false
-  sharingLinks = [ "linkedin", "twitter", "bluesky", "mastodon", "reddit", "pinterest", "facebook", "email", "whatsapp", "telegram", "line"]
+  # sharingLinks = [ "linkedin", "twitter", "bluesky", "mastodon", "reddit", "pinterest", "facebook", "email", "whatsapp", "telegram", "line"]
+  sharingLinks = [ "linkedin", "twitter", "bluesky", "mastodon", "reddit", "facebook", "email", "whatsapp", "telegram", "line"]
   showZenMode = false
   showComments = true
 

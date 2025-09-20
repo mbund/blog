@@ -19,20 +19,11 @@ layoutBackgroundHeaderSpace: false
 showComments: false
 ---
 
-I'm a software developer who loves to learn and build things. Nearly all aspects of the software world interest me. I develop [websites written in Rust and TypeScript](https://github.com/rhombusgg/rhombus). I make interpreters for my [custom DSLs](https://crates.io/crates/healthscript). [I improve my efficiency](/posts/cicd-for-university) by building [CLI tools](https://crates.io/crates/canvas-cli). I maintain a [homelab using Kubernetes](/posts/homelab) and use [CI/CD extensively](/posts/advanced-github). I play in cybersecurity CTFs and write [secure embedded systems in Zig](https://github.com/OSU-embedded-security-club/ectf-osu-2025). I [experiment with eBPF](https://github.com/mbund/dimarchos) in the Linux kernel. Sometimes I write about what I'm doing on [my blog](/posts). If it's an innovative technology, I'm probably interested in it.
+I'm a software developer who loves to learn and build things.
+In my free time I write about what I'm doing on [my blog](/posts) and develop software released as open source on [my GitHub](https://github.com/mbund).
 
-Currently, I'm a Software Development Engineering Intern working on Linux kernel development at AWS. During the semester I am an undergraduate student at The Ohio State University studying Computer Science and Engineering.
+I'm a Computer Science and Engineering student at The Ohio State University.
+Last summer I was a Software Development Engineering Intern at AWS on the Amazon Linux kernel team.
+In previous years I've had other internships working on frontend software development, and also in cyber security.
 
-And yes, my bio, "An eigenvector is a eigenvalue in the category of endofunctors" does not mean anything.
-
-## Projects
-
-A curated selection of some of my projects.
-
-<div class="flex flex-col gap-4">
-{{< github repo="rhombusgg/rhombus" showThumbnail=false >}}
-{{< github repo="rhombusgg/healthscript" showThumbnail=false >}}
-{{< github repo="mbund/canvas-cli" showThumbnail=false >}}
-{{< github repo="mbund/dimarchos" showThumbnail=false >}}
-{{< github repo="mbund/homelab" showThumbnail=false >}}
-</div>
+{{< list title="Recent Posts" limit=3 >}}
